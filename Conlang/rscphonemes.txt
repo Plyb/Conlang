@@ -1,0 +1,1 @@
+m = consonant bilabial nasal pulmonic voiced

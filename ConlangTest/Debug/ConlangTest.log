@@ -1,0 +1,3 @@
+﻿  test.cpp
+C:\Users\Koby\source\repos\Conlang\ConlangTest\test.cpp(8,2): warning C4566:  character represented by universal-character-name '\u0288' cannot be represented in the current code page (1252)
+  ConlangTest.vcxproj -> C:\Users\Koby\source\repos\Conlang\Debug\ConlangTest.exe
