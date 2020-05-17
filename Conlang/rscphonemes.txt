@@ -1,1 +1,2 @@
 m = consonant bilabial nasal pulmonic voiced
+p = consonant bilabial plosive pulmonic unvoied
