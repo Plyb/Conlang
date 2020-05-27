@@ -7,11 +7,11 @@
 using namespace std;
 using convert_type = std::codecvt_utf8<wchar_t>;
 
-set<Phoneme> PhonemeLibrary::includesTypes(unsigned int typeCount, PhonemeTypes types...) {
+set<Phoneme> PhonemeLibrary::includesTypes(std::initializer_list<PhonemeTypes> types) {
 
-	set<Phoneme> matches;
+	set<Phoneme> matches;\
 	for (set<Phoneme>::iterator iter = allPhonemes.begin(); iter != allPhonemes.end(); iter++) {
-		if ((*iter).includesTypes(typeCount, types)) {
+		if ((*iter).includesTypes(types)) {
 			matches.insert(*iter);
 		}
 	}
@@ -35,7 +35,7 @@ PhonemeLibrary::PhonemeLibrary() {
 
 		std::wstringstream lineStream(line);
 		lineStream >> symbol;
-		lineStream.ignore();
+		lineStream.ignore(numeric_limits<streamsize>::max(), '=');
 
 		std::wstring type;
 		while (lineStream >> type) {

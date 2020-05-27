@@ -3,10 +3,11 @@
 #include <map>
 #include <string>
 #include <cstdarg>
+#include <initializer_list>
 
 enum PhonemeTypes { CONSONANT, PULMONIC, VOICED, UNVOICED, 
-	BILABIAL, LABIODENTAL, DENTAL, ALVEOLAR, PALATOALVEOLAR, RETROFLEX, ALVEOLOPALATAL, PALATAL, VELAR, UVULAR, PHARYNGEAL, GLOTTAL,
-	PLOSIVE, FRICATIVE, NASAL, APPROXIMANT, TAP, TRILL, LATERAL_FRICATIVE, LATERAL_APPROXIMANT, LATERAL_FLAP, 
+	BILABIAL, LABIODENTAL, DENTAL, ALVEOLAR, POSTALVEOLAR, RETROFLEX, ALVEOLOPALATAL, PALATAL, VELAR, UVULAR, PHARYNGEAL, GLOTTAL,
+	PLOSIVE, SIBILANT, NONSIBILANT_FRICATIVE, NASAL, APPROXIMANT, TAP, TRILL, LATERAL_FRICATIVE, LATERAL_APPROXIMANT, LATERAL_FLAP, 
 	AFFRICATE, COARTICULATED,
 	NONPULMONIC, CLICK, IMPLOSIVE, EJECTIVE, //For economy, clicks should be encoded as Bilabial, Dental, Retroflex, Palatal, or "Lateral Frivative"
 	VOWEL, ROUNDED, UNROUNDED,
@@ -17,17 +18,17 @@ enum PhonemeTypes { CONSONANT, PULMONIC, VOICED, UNVOICED,
 class Phoneme
 {
 public:
-	Phoneme(std::wstring symbol, unsigned int typeCount, PhonemeTypes ...);
+	Phoneme(std::wstring symbol, std::initializer_list<PhonemeTypes> types);
 	Phoneme(std::wstring symbol, std::set<PhonemeTypes> types);
 
-	bool includesTypes(unsigned int typeCount, PhonemeTypes ...) const;
+	bool includesTypes(std::initializer_list<PhonemeTypes> types) const;
 
 	std::wstring getSymbol() const {
 		return symbol;
 	}
 
 	static PhonemeTypes stringToType(std::string string) {
-		return stringToTypeMap.at(string);
+		return stringToTypeMap[string];
 	}
 
 	bool operator<(const Phoneme& other) const {
@@ -41,6 +42,6 @@ private:
 	std::set<PhonemeTypes> types;
 	std::wstring symbol;
 
-	static const std::map<std::string, PhonemeTypes> stringToTypeMap;
+	static std::map<std::string, PhonemeTypes> stringToTypeMap;
 };
 

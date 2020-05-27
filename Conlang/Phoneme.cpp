@@ -3,40 +3,26 @@
 
 using namespace std;
 
-Phoneme::Phoneme(std::wstring symbol, std::set<PhonemeTypes> types) {
+Phoneme::Phoneme(wstring symbol, set<PhonemeTypes> types) {
 	this->symbol = symbol;
 	this->types = types;
 }
 
-Phoneme::Phoneme(std::wstring symbol, unsigned int typeCount, PhonemeTypes ...) {
-	va_list types;
-	va_start(types, typeCount);
-	set<PhonemeTypes> typeSet;
-	for (unsigned int i = 0; i < typeCount; i++) {
-		typeSet.insert(va_arg(types, PhonemeTypes));
-	}
-	va_end(types);
-
+Phoneme::Phoneme(wstring symbol, initializer_list<PhonemeTypes> types) {
 	this->symbol = symbol;
-	this->types = typeSet;
+	this->types = types;
 }
 
-bool Phoneme::includesTypes(unsigned int typeCount, PhonemeTypes ...) const {
-	va_list inputTypes;
-	va_start(inputTypes, typeCount);
-	set<PhonemeTypes> inputTypeSet;
-	for (unsigned int i = 0; i < typeCount; i++) {
-		inputTypeSet.insert(va_arg(inputTypes, PhonemeTypes));
-	}
-	va_end(inputTypes);
+bool Phoneme::includesTypes(initializer_list<PhonemeTypes> types) const {
+	set<PhonemeTypes> typeSet = types;
 
-	return includes(types.begin(), types.end(), inputTypeSet.begin(), inputTypeSet.end());
+	return includes(this->types.begin(), this->types.end(), typeSet.begin(), typeSet.end());
 }
 
-const map<string, PhonemeTypes> Phoneme::stringToTypeMap = { 
+map<string, PhonemeTypes> Phoneme::stringToTypeMap = { 
 	{"consonant", CONSONANT}, {"pulmonic", PULMONIC}, {"voiced", VOICED}, {"unvoiced", UNVOICED},
-	{"bilabial", BILABIAL}, {"labiodental", LABIODENTAL}, {"dental", DENTAL}, {"alveolar", ALVEOLAR}, {"palatoalveolar", PALATOALVEOLAR}, {"retroflex", RETROFLEX}, {"alveolopalatal", ALVEOLOPALATAL}, {"palatal", PALATAL}, {"velar", VELAR}, {"uvular", UVULAR}, {"pharyngeal", PHARYNGEAL}, {"glottal", GLOTTAL},
-	{"plosive", PLOSIVE}, {"fricative", FRICATIVE}, {"nasal", NASAL}, {"approximant", APPROXIMANT}, {"tap", TAP}, {"trill", TRILL}, {"lateral-fricative", LATERAL_FRICATIVE}, {"lateral-approximant", LATERAL_APPROXIMANT}, {"lateral-flap", LATERAL_FLAP},
+	{"bilabial", BILABIAL}, {"labiodental", LABIODENTAL}, {"dental", DENTAL}, {"alveolar", ALVEOLAR}, {"postalveolar", POSTALVEOLAR}, {"retroflex", RETROFLEX}, {"alveolopalatal", ALVEOLOPALATAL}, {"palatal", PALATAL}, {"velar", VELAR}, {"uvular", UVULAR}, {"pharyngeal", PHARYNGEAL}, {"glottal", GLOTTAL},
+	{"plosive", PLOSIVE}, {"sibilant", SIBILANT}, {"nonsibilant-fricative", NONSIBILANT_FRICATIVE}, {"nasal", NASAL}, {"approximant", APPROXIMANT}, {"tap", TAP}, {"trill", TRILL}, {"lateral-fricative", LATERAL_FRICATIVE}, {"lateral-approximant", LATERAL_APPROXIMANT}, {"lateral-flap", LATERAL_FLAP},
 	{"affricate", AFFRICATE}, {"coarticulated", COARTICULATED},
 	{"nonpulmonic", NONPULMONIC},{"click", CLICK},{"implosive", IMPLOSIVE},{"ejective", EJECTIVE},
 	{"vowel", VOWEL},{"rounded", ROUNDED},{"unrounded", UNROUNDED},

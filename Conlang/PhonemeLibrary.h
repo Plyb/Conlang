@@ -6,7 +6,7 @@ class PhonemeLibrary
 public:
 	PhonemeLibrary();
 
-	std::set<Phoneme> includesTypes(unsigned int typeCount, PhonemeTypes types...);
+	std::set<Phoneme> includesTypes(std::initializer_list<PhonemeTypes> types);
 private:
 	std::set<Phoneme> allPhonemes;
 };
